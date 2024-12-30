@@ -1,0 +1,36 @@
+<!-- ._bk\user-app-docs\templates\docs.html -->
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ドキュメント一覧</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>ドキュメント一覧</h1>
+    <p>ユーザー: {{ user.username }}</p>
+    <a href="/docs/create">新規ドキュメント作成</a> |
+    <a href="/logout">ログアウト</a>
+    <br><br>
+
+    <form action="/docs/hub_search" method="get">
+        <input type="text" name="query" placeholder="検索クエリを入力" required>
+        <button type="submit">検索</button>
+    </form>
+    <br>
+
+    {% if documents %}
+        <ul>
+            {% for doc in documents %}
+                <li>
+                    <a href="/docs/{{ doc.id }}">{{ doc.title }}</a> -
+                    <strong>{{ "有効" if doc.is_active else "無効" }}</strong>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>ドキュメントはありません。</p>
+    {% endif %}
+</body>
+</html>
